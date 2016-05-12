@@ -1,0 +1,5 @@
+#!/bin/bash -eu
+
+WHEREAMI="$(cd `dirname "$0"` && pwd)"
+
+exec java -cp `ls "$WHEREAMI"/lib/*.jar | xargs | tr ' ' ':'` io.imply.jackhammer.Main "$@"
