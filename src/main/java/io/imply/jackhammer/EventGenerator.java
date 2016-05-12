@@ -28,13 +28,13 @@ public class EventGenerator
   private static final String TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
   private static final String[] METHODS = {"GET", "PUT", "POST", "DELETE", "OPTIONS", "HEAD"};
 
-  public static String generate()
+  public static String generate(int cardinality)
   {
     return String.format(
         EVENT_FORMAT,
         new DateTime(DateTimeZone.UTC).toString(TIME_FORMAT),
         METHODS[RND.nextInt(6)],
-        RND.nextBoolean(),
+        RND.nextInt(cardinality),
         RND.nextInt(1000000)
     );
   }

@@ -34,6 +34,7 @@ public class Runner
   private final long eventsPerThread;
   private final int rate;
   private final int numThreads;
+  private final int cardinality;
   private final ExecutorService executorService;
   private final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
@@ -42,13 +43,14 @@ public class Runner
   private long startTime;
   private List<LittleHammer> littleHammers = new ArrayList<>();
 
-  public Runner(KafkaEventWriter writer, int rate, long eventsPerThread, int numThreads)
+  public Runner(KafkaEventWriter writer, int rate, long eventsPerThread, int numThreads, int cardinality)
   {
     this.writer = writer;
     this.eventsPerThread = eventsPerThread;
     this.rate = rate;
     this.numThreads = numThreads;
     this.executorService = Executors.newFixedThreadPool(numThreads);
+    this.cardinality = cardinality;
   }
 
   public void run() throws InterruptedException
@@ -131,7 +133,7 @@ public class Runner
           break;
         }
 
-        writer.write(EventGenerator.generate());
+        writer.write(EventGenerator.generate(cardinality));
         counter++;
 
         if (rate > 0) {

@@ -48,8 +48,11 @@ public class Main
   @Option(name = {"-e", "--events"}, description = "Events to generate per thread (default: unlimited)")
   public long eventsPerThread;
 
-  @Option(name = {"-n", "--threads"}, description = "Number of threads (default: 1")
+  @Option(name = {"-n", "--threads"}, description = "Number of threads (default: 1)")
   public int numThreads = 1;
+
+  @Option(name = {"-c", "--cardinality"}, description = "Cardinality (default: 10)")
+  public int cardinality = 10;
 
   public static void main(String[] args) throws Exception
   {
@@ -81,7 +84,8 @@ public class Main
         new KafkaEventWriter(brokers, topic),
         rate,
         eventsPerThread,
-        numThreads
+        numThreads,
+        cardinality
     );
     runner.run();
 
