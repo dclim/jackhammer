@@ -24,18 +24,27 @@ import java.util.Random;
 public class EventGenerator
 {
   private static final Random RND = new Random();
-  private static final String EVENT_FORMAT = "{\"timestamp\":\"%s\", \"dim1\":\"%s\", \"dim2\":\"%s\", \"value\":%d}";
   private static final String TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
-  private static final String[] METHODS = {"GET", "PUT", "POST", "DELETE", "OPTIONS", "HEAD"};
 
-  public static String generate(int cardinality)
+  public static String generate(int numLowCardDims, int numHighCardDims, int lowCardRange, int highCardRange)
   {
-    return String.format(
-        EVENT_FORMAT,
-        new DateTime(DateTimeZone.UTC).toString(TIME_FORMAT),
-        METHODS[RND.nextInt(6)],
-        RND.nextInt(cardinality),
-        RND.nextInt(1000000)
+    StringBuilder builder = new StringBuilder(150);
+    builder.append(
+        String.format(
+            "{\"timestamp\":\"%s\", \"value\":%d",
+            new DateTime(DateTimeZone.UTC).toString(TIME_FORMAT),
+            RND.nextInt(1000000)
+        )
     );
+
+    for (int i = 0; i < numLowCardDims; i++) {
+      builder.append(String.format(", \"dim%d\":\"%s\"", i, RND.nextInt(lowCardRange)));
+    }
+
+    for (int i = numLowCardDims; i < numLowCardDims + numHighCardDims; i++) {
+      builder.append(String.format(", \"dim%d\":\"%s\"", i, RND.nextInt(highCardRange)));
+    }
+
+    return builder.append("}").toString();
   }
 }

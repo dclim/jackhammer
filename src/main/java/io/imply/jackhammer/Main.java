@@ -51,8 +51,18 @@ public class Main
   @Option(name = {"-n", "--threads"}, description = "Number of threads (default: 1)")
   public int numThreads = 1;
 
-  @Option(name = {"-c", "--cardinality"}, description = "Cardinality (default: 10)")
-  public int cardinality = 10;
+  @Option(name = {"-nl"}, description = "Number of low cardinality dimensions (default: 1)")
+  public int numLowCardDims = 1;
+
+  @Option(name = {"-nh"}, description = "Number of high cardinality dimensions (default: 0)")
+  public int numHighCardDims = 0;
+
+  @Option(name = {"-rl"}, description = "Low cardinality range (default: 10)")
+  public int lowCardRange = 10;
+
+  @Option(name = {"-rh"}, description = "High cardinality range (default: 1000000)")
+  public int highCardRange = 1000000;
+
 
   public static void main(String[] args) throws Exception
   {
@@ -85,7 +95,10 @@ public class Main
         rate,
         eventsPerThread,
         numThreads,
-        cardinality
+        numLowCardDims,
+        numHighCardDims,
+        lowCardRange,
+        highCardRange
     );
     runner.run();
 
