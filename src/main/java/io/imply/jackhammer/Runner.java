@@ -38,6 +38,7 @@ public class Runner
   private final int numHighCardDims;
   private final int lowCardRange;
   private final int highCardRange;
+  private final int numMetrics;
   private final ExecutorService executorService;
   private final ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
@@ -54,7 +55,8 @@ public class Runner
       int numLowCardDims,
       int numHighCardDims,
       int lowCardRange,
-      int highCardRange
+      int highCardRange,
+      int numMetrics
   )
   {
     this.writer = writer;
@@ -66,6 +68,7 @@ public class Runner
     this.numHighCardDims = numHighCardDims;
     this.lowCardRange = lowCardRange;
     this.highCardRange = highCardRange;
+    this.numMetrics = numMetrics;
   }
 
   public void run() throws InterruptedException
@@ -148,7 +151,7 @@ public class Runner
           break;
         }
 
-        writer.write(EventGenerator.generate(numLowCardDims, numHighCardDims, lowCardRange, highCardRange));
+        writer.write(EventGenerator.generate(numLowCardDims, numHighCardDims, lowCardRange, highCardRange, numMetrics));
         counter++;
 
         if (rate > 0) {

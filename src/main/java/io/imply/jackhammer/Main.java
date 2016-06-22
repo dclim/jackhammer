@@ -63,6 +63,9 @@ public class Main
   @Option(name = {"-rh"}, description = "High cardinality range (default: 1000000)")
   public int highCardRange = 1000000;
 
+  @Option(name = {"-m"}, description = "Number of metric columns (default: 1)")
+  public int numMetrics = 1;
+
 
   public static void main(String[] args) throws Exception
   {
@@ -98,7 +101,8 @@ public class Main
         numLowCardDims,
         numHighCardDims,
         lowCardRange,
-        highCardRange
+        highCardRange,
+        numMetrics
     );
     runner.run();
 

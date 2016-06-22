@@ -26,16 +26,25 @@ public class EventGenerator
   private static final Random RND = new Random();
   private static final String TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 
-  public static String generate(int numLowCardDims, int numHighCardDims, int lowCardRange, int highCardRange)
+  public static String generate(
+      int numLowCardDims,
+      int numHighCardDims,
+      int lowCardRange,
+      int highCardRange,
+      int numMetrics
+  )
   {
     StringBuilder builder = new StringBuilder(150);
     builder.append(
         String.format(
-            "{\"timestamp\":\"%s\", \"value\":%d",
-            new DateTime(DateTimeZone.UTC).toString(TIME_FORMAT),
-            RND.nextInt(1000000)
+            "{\"timestamp\":\"%s\"",
+            new DateTime(DateTimeZone.UTC).toString(TIME_FORMAT)
         )
     );
+
+    for (int i = 0; i < numMetrics; i++) {
+      builder.append(String.format(", \"met%d\":%d", i, RND.nextInt(1000000)));
+    }
 
     for (int i = 0; i < numLowCardDims; i++) {
       builder.append(String.format(", \"dim%d\":\"%s\"", i, RND.nextInt(lowCardRange)));
